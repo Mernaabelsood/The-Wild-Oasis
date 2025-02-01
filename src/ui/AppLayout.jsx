@@ -15,6 +15,14 @@ const Main = styled.main`
   padding: 4rem 4.8rem 6.4rem;
 `;
 
+const Container = styled.div`
+  max-width: 120rem;
+  margin: 0 auto;
+  gap: 3.25rem;
+  display: flex;
+  flex-direction: column;
+`;
+
 export default function AppLayout() {
   return (
     <StyleAppLayout>
@@ -22,7 +30,10 @@ export default function AppLayout() {
       <Sidebar />
 
       <Main>
+        <Container>
         <Outlet />
+        </Container>
+        
       </Main>
     </StyleAppLayout>
   );
