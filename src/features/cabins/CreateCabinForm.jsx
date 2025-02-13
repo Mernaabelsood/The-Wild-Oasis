@@ -45,35 +45,40 @@ const Error = styled.span`
 
 function CreateCabinForm() {
 
- 
+ const {register, handleSubmit} = useForm();
+
+  function onSubmit(data) {
+    console.log(data);
+    //this will display the form data I entered in the console after hitting submit
+  }
 
   return (
 
    
-    <Form>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow>
         <Label htmlFor="name">Cabin name</Label>
-        <Input type="text" id="name" />
+        <Input type="text" id="name" {...register("name")} />
       </FormRow>
 
       <FormRow>
         <Label htmlFor="maxCapacity">Maximum capacity</Label>
-        <Input type="number" id="maxCapacity" />
+        <Input type="number" id="maxCapacity" {...register("maxCapacity", {required: true})} />
       </FormRow>
 
       <FormRow>
         <Label htmlFor="regularPrice">Regular price</Label>
-        <Input type="number" id="regularPrice" />
+        <Input type="number" id="regularPrice"  {...register("regularPrice", {required: true})}/>
       </FormRow>
 
       <FormRow>
         <Label htmlFor="discount">Discount</Label>
-        <Input type="number" id="discount" defaultValue={0} />
+        <Input type="number" id="discount" defaultValue={0} {...register("discount", {required: true})} />
       </FormRow>
 
       <FormRow>
         <Label htmlFor="description">Description for website</Label>
-        <Textarea type="number" id="description" defaultValue="" />
+        <Textarea type="number" id="description" defaultValue=""  {...register("description", {required: true})}/>
       </FormRow>
 
       <FormRow>
@@ -84,9 +89,9 @@ function CreateCabinForm() {
       <FormRow>
         {/* type is an HTML attribute! */}
         <Button variation="secondary" type="reset">
-          Cancel
+          Reset
         </Button>
-        <Button>Edit cabin</Button>
+        <Button type="submit">Add cabin</Button>
       </FormRow>
     </Form>
   );

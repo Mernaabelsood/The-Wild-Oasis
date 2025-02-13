@@ -18,7 +18,7 @@ const [showForm, setShowForm] = useState(false);
     <Row>
       <CabinTable/>
       <Button type="button" onClick={() => setShowForm((show)=> !show)}> Add New Cabin</Button>
-      { showForm && <CreateCabinForm>Form</CreateCabinForm>}
+      { showForm && <CreateCabinForm/> }
     </Row>
     </>
   );

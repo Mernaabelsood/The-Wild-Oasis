@@ -19,6 +19,8 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 60 * 1000,
+
+      //for 1 minute, React Query will serve the cached data without refetching
     },
   },
 });
