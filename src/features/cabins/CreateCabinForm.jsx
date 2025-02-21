@@ -104,7 +104,7 @@ function CreateCabinForm() {
       </FormRow>
 
       <FormRow>
-        <Label htmlFor="description">Description for website</Label>
+        <Label htmlFor="description">Description for cabin</Label>
         <Textarea
           type="number"
           id="description"
