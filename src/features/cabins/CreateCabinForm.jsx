@@ -46,15 +46,11 @@ const Error = styled.span`
   color: var(--color-red-700);
 `;
 
-function CreateCabinForm({cabinToEdit={}}) {
+function CreateCabinForm() {
 
-const {id: editId, ...editValues} = cabinToEdit
-const isEditSession = Boolean(editId)
 
   const { register, handleSubmit, reset } = useForm(
-    {
-      defaultValues: isEditSession ? editValues : {}
-    }
+   
   );
 
   const queryClient = useQueryClient();
@@ -131,7 +127,7 @@ const isEditSession = Boolean(editId)
         <Button variation="secondary" type="reset">
           Reset
         </Button>
-        <Button type="submit" disabled={isLoading}>{isEditSession ? "Edit cabin" : "Create cabin"}</Button>
+        <Button type="submit" disabled={isLoading}>Create cabin</Button>
       </FormRow>
     </Form>
   );

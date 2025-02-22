@@ -69,7 +69,7 @@ const queryClient = useQueryClient();
   });
 
   return (
-    <>
+  
     <TableRow role="row">
       <Img src={image} alt="Cabin" />
       <div>
@@ -82,12 +82,12 @@ const queryClient = useQueryClient();
       <div>
         <Discount>${discount}</Discount>
       </div>
-<div >
-  <button onClick={() => setShowForm((show) => !show)} >Edit</button>
+
+ 
 <button onClick={() => mutate(cabinId)} disabled={isDeleting}> Delete </button>
 
-  </div>    </TableRow>
-  {showForm && <CreateCabinForm  cabinToEdit={cabin}  />}
-  </>
+    </TableRow>
+ 
+  
   );
 }
