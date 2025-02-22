@@ -46,8 +46,16 @@ const Error = styled.span`
   color: var(--color-red-700);
 `;
 
-function CreateCabinForm() {
-  const { register, handleSubmit, reset } = useForm();
+function CreateCabinForm({cabinToEdit={}}) {
+
+const {id: editId, ...editValues} = cabinToEdit
+const isEditSession = Boolean(editId)
+
+  const { register, handleSubmit, reset } = useForm(
+    {
+      defaultValues: isEditSession ? editValues : {}
+    }
+  );
 
   const queryClient = useQueryClient();
   const { mutate, isLoading } = useMutation({
@@ -115,7 +123,7 @@ function CreateCabinForm() {
 
       <FormRow>
         <Label htmlFor="image">Cabin photo</Label>
-        <FileInput id="image" accept="image/*"  {...register("image", { required: true })}  type="file"/>
+        <FileInput id="image" accept="image/*"  {...register("image", )}  type="file"/>
       </FormRow>
 
       <FormRow>
@@ -123,7 +131,7 @@ function CreateCabinForm() {
         <Button variation="secondary" type="reset">
           Reset
         </Button>
-        <Button type="submit" disabled={isLoading}>Add cabin</Button>
+        <Button type="submit" disabled={isLoading}>{isEditSession ? "Edit cabin" : "Create cabin"}</Button>
       </FormRow>
     </Form>
   );
