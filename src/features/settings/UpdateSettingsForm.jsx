@@ -1,8 +1,11 @@
 import Form from '../../ui/Form';
 import FormRow from '../../ui/FormRow';
 import Input from '../../ui/Input';
+import { useSettings } from './useSettings';
 
 function UpdateSettingsForm() {
+
+  const {isLoading, settings} = useSettings();
   return (
     <Form>
       <FormRow label='Minimum nights/booking'>
