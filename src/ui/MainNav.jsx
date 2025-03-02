@@ -82,12 +82,12 @@ export default function MainNav() {
             <span>Users</span>
           </StyledNavLink>
         </li>
-        <li>
+        {/* <li>
           <StyledNavLink to="/settings">
             <HiCog6Tooth color="currentColor" />
             <span>Settings</span>
           </StyledNavLink>
-        </li>
+        </li> */}
       </NavList>
     </nav>
   );

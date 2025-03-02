@@ -38,7 +38,7 @@ export default function App() {
             <Route path="/bookings" element={<Bookings />} />
             <Route path="/users" element={<Users />} />
             <Route path="/cabins" element={<Cabins />} />
-            <Route path="/settings" element={<Settings />} />
+            {/* <Route path="/settings" element={<Settings />} /> */}
             <Route path="/account" element={<Account />} />
           </Route>
           <Route path="/login" element={<Login />} />
