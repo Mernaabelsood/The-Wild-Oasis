@@ -4,8 +4,7 @@ import { format, isToday } from "date-fns";
 import Tag from "../../ui/Tag";
 import Table from "../../ui/Table";
 
-import { formatCurrency } from "../../utils/helpers";
-import { formatDistanceFromNow } from "../../utils/helpers";
+import { formatCurrency, formatDistanceFromNow } from "../../utils/helpers";
 
 const Cabin = styled.div`
   font-size: 1.6rem;
@@ -54,6 +53,10 @@ function BookingRow({
     "checked-out": "silver",
   };
 
+  // Ensure dates are properly parsed
+  const startDateObj = new Date(startDate);
+  const endDateObj = new Date(endDate);
+
   return (
     <Table.Row>
       <Cabin>{cabinName}</Cabin>
@@ -65,14 +68,12 @@ function BookingRow({
 
       <Stacked>
         <span>
-          {isToday(new Date(startDate))
-            ? "Today"
-            : formatDistanceFromNow(startDate)}{" "}
+          {isToday(startDateObj) ? "Today" : formatDistanceFromNow(startDateObj)}{" "}
           &rarr; {numNights} night stay
         </span>
         <span>
-          {format(new Date(startDate), "MMM dd yyyy")} &mdash;{" "}
-          {format(new Date(endDate), "MMM dd yyyy")}
+          {format(startDateObj, "MMM dd yyyy")} &mdash;{" "}
+          {format(endDateObj, "MMM dd yyyy")}
         </span>
       </Stacked>
 
