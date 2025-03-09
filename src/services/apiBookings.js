@@ -1,9 +1,9 @@
 import { getToday } from "../utils/helpers";
-import supabase from "./supabase";
+import supabase from "./superbase";
 
 
 export async function getBookings() {
-const {data, error} = await supabase.from('bookings').select('*');
+const {data, error} = await supabase.from('bookings').select('*, cabins(*), guests(*)');
 
 if (error) {
   console.error(error);
@@ -13,7 +13,7 @@ if (error) {
 export async function getBooking(id) {
   const { data, error } = await supabase
     .from("bookings")
-    .select("*, cabins(*), guests(*)")
+    .select("id, created_at, startDate, endDate, numNights, numGuests, status, totalPrice, cabins(name), guests(fullName, email)")
     .eq("id", id)
     .single();
 

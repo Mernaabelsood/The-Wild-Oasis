@@ -57,31 +57,31 @@ export default function MainNav() {
   return (
     <nav>
       <NavList>
-        <li>
+        {/* <li>
           <StyledNavLink to="/dashboard">
             {" "}
             <HiHome color="currentColor" />
             <span>Home</span>
           </StyledNavLink>
-        </li>
-        <li>
+        </li> */}
+        {/* <li>
           <StyledNavLink to="/bookings">
             <HiCalendarDays color="currentColor" />
             <span>Bookings</span>
           </StyledNavLink>
-        </li>
+        </li> */}
         <li>
           <StyledNavLink to="/cabins">
             <HiHomeModern color="currentColor" />
             <span>Cabins</span>
           </StyledNavLink>
         </li>
-        <li>
+        {/* <li>
           <StyledNavLink to="/users">
             <HiUsers color="currentColor" />
             <span>Users</span>
           </StyledNavLink>
-        </li>
+        </li> */}
         {/* <li>
           <StyledNavLink to="/settings">
             <HiCog6Tooth color="currentColor" />
