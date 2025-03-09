@@ -60,3 +60,15 @@ export async function deleteCabin(id) {
 return data;
 
 }
+
+export async function updateCabin(updatedCabin) {
+  const res = await fetch(`/api/cabins/${updatedCabin.id}`, {
+    method: "PUT",
+    body: JSON.stringify(updatedCabin),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (!res.ok) throw new Error("Failed to update cabin");
+  return res.json();
+}
