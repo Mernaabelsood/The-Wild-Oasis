@@ -30,21 +30,19 @@ const TableHeader = styled.header`
   padding: 1.6rem 2.4rem;
 `;
 
+const PAGE_SIZE = 5; // Limit cabins per page
+
 export default function CabinTable() {
-  const {
-    data: cabins,
-    isLoading,
-    error,
-  } = useQuery({
+  const { data: cabins, isLoading } = useQuery({
     queryKey: ["cabins"],
     queryFn: getCabins,
   });
 
   const [searchParams] = useSearchParams();
+  const currentPage = Number(searchParams.get("page")) || 1;
 
   if (isLoading) return <Spinner />;
-
-  if (!cabins.length) return <Empty resource="cabins" />;
+  if (!cabins?.length) return <Empty resource="cabins" />;
 
   // 1️⃣ FILTER
   const filterValue = searchParams.get("discount") || "all";
@@ -60,26 +58,20 @@ export default function CabinTable() {
   const [field, direction] = sortBy.split("-");
   const modifier = direction === "asc" ? 1 : -1;
 
-  console.log("Sort Field:", field);
-  console.log("Sort Direction:", direction);
-  console.log("Filtered Cabins:", filteredCabins);
-
-  // Sorting with error handling
   const sortedCabins = [...filteredCabins].sort((a, b) => {
-    if (!a.hasOwnProperty(field) || !b.hasOwnProperty(field)) return 0; // Skip sorting if field doesn't exist
-
-    if (typeof a[field] === "number" && typeof b[field] === "number") {
+    if (!a.hasOwnProperty(field) || !b.hasOwnProperty(field)) return 0;
+    if (typeof a[field] === "number" && typeof b[field] === "number")
       return (a[field] - b[field]) * modifier;
-    }
-
-    if (typeof a[field] === "string" && typeof b[field] === "string") {
+    if (typeof a[field] === "string" && typeof b[field] === "string")
       return a[field].localeCompare(b[field]) * modifier;
-    }
-
-    return 0; // Default case if data types don't match
+    return 0;
   });
 
-
+  // 3️⃣ PAGINATION - Slice cabins for current page
+  const totalCabins = sortedCabins.length;
+  const startIndex = (currentPage - 1) * PAGE_SIZE;
+  const endIndex = startIndex + PAGE_SIZE;
+  const paginatedCabins = sortedCabins.slice(startIndex, endIndex);
 
   return (
     <Table role="table">
@@ -91,17 +83,14 @@ export default function CabinTable() {
         <div>Discount</div>
         <div></div>
       </TableHeader>
-      {/* data={cabins}
-      data={filteredCabins} */}
-      {sortedCabins.map((cabin) => (
+
+      {paginatedCabins.map((cabin) => (
         <CabinRow key={cabin.id} cabin={cabin} />
       ))}
 
-<div style={{ marginTop: "2rem" }}>
-  <Pagination count={10} />
-</div>
-
-
+      <div style={{ marginTop: "2rem", padding: "0 2.4rem" }}>
+        <Pagination count={totalCabins} />
+      </div>
     </Table>
   );
 }

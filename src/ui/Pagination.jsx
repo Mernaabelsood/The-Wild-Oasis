@@ -1,19 +1,14 @@
 import styled from "styled-components";
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
+import { useSearchParams } from "react-router-dom";
+
+const PAGE_SIZE = 5;
 
 const StyledPagination = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-`;
-
-const P = styled.p`
-  font-size: 1.4rem;
-  margin-left: 0.8rem;
-
-  & span {
-    font-weight: 600;
-  }
 `;
 
 const Buttons = styled.div`
@@ -23,8 +18,8 @@ const Buttons = styled.div`
 
 const PaginationButton = styled.button`
   background-color: ${(props) =>
-    props.active ? " var(--color-brand-600)" : "var(--color-grey-50)"};
-  color: ${(props) => (props.active ? " var(--color-brand-50)" : "inherit")};
+    props.active ? "var(--color-brand-600)" : "var(--color-grey-50)"};
+  color: ${(props) => (props.active ? "var(--color-brand-50)" : "inherit")};
   border: none;
   border-radius: var(--border-radius-sm);
   font-weight: 500;
@@ -56,53 +51,54 @@ const PaginationButton = styled.button`
   }
 `;
 
-
-import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
-import { useSearchParams } from "react-router-dom";
-
-
-const PAGE_SIZE = 5;
-export default function Pagination({count}) {
-
+export default function Pagination({ count }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
-useSearchParams();
-const currentPage = !searchParams.get('page') ? 1 : Number(searchParams.get('page'));
+  const currentPage = !searchParams.get("page")
+    ? 1
+    : Number(searchParams.get("page"));
 
-const pageCount = Math.ceil(count / PAGE_SIZE);
+  const pageCount = Math.ceil(count / PAGE_SIZE);
 
-function nextPage(){
-  const next = currentPage === pageCount ? currentPage : currentPage + 1;
-  searchParams.set('page', next);
-  setSearchParams(searchParams);
-}
-function prevPage(){
-  const prev = currentPage === 1 ? currentPage : currentPage - 1;
-  searchParams.set('page', prev);
-  setSearchParams(searchParams);  
-}
+  function nextPage() {
+    if (currentPage < pageCount) {
+      searchParams.set("page", currentPage + 1);
+      setSearchParams(searchParams);
+    }
+  }
 
-if (pageCount <= 1) return null;
+  function prevPage() {
+    if (currentPage > 1) {
+      searchParams.set("page", currentPage - 1);
+      setSearchParams(searchParams);
+    }
+  }
+
+  if (pageCount <= 1) return null;
+
+  const startItem = (currentPage - 1) * PAGE_SIZE + 1;
+  const endItem = Math.min(currentPage * PAGE_SIZE, count);
+
   return (
-    <StyledPagination> 
-
-      <p> showing <span>{(currentPage - 1) * PAGE_SIZE + 1}</span> to <span>{ currentPage * PAGE_SIZE}</span> of <span>{count}</span> results</p>
+    <StyledPagination>
+      <p>
+        Showing <span>{startItem}</span> to <span>{endItem}</span> out of{" "}
+        <span>{count}</span> results
+      </p>
 
       <Buttons>
-
         <PaginationButton onClick={prevPage} disabled={currentPage === 1}>
-
           <HiChevronLeft />
           <span>Prev</span>
         </PaginationButton>
-        <PaginationButton onClick={nextPage} disabled={currentPage === pageCount}>
-
+        <PaginationButton
+          onClick={nextPage}
+          disabled={currentPage === pageCount}
+        >
           <HiChevronRight />
           <span>Next</span>
         </PaginationButton>
       </Buttons>
-
-      </StyledPagination>
-  )
+    </StyledPagination>
+  );
 }
-
