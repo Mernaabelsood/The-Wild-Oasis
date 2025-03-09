@@ -5,6 +5,7 @@ import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
 import { useSearchParams } from "react-router-dom";
 import Empty from "../../ui/Empty";
+import Pagination from "../../ui/Pagination";
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -43,8 +44,7 @@ export default function CabinTable() {
 
   if (isLoading) return <Spinner />;
 
-  if(!cabins.length) return <Empty resource="cabins"/>;
-
+  if (!cabins.length) return <Empty resource="cabins" />;
 
   // 1️⃣ FILTER
   const filterValue = searchParams.get("discount") || "all";
@@ -79,6 +79,8 @@ export default function CabinTable() {
     return 0; // Default case if data types don't match
   });
 
+
+
   return (
     <Table role="table">
       <TableHeader role="row">
@@ -94,6 +96,12 @@ export default function CabinTable() {
       {sortedCabins.map((cabin) => (
         <CabinRow key={cabin.id} cabin={cabin} />
       ))}
+
+<div style={{ marginTop: "2rem" }}>
+  <Pagination count={10} />
+</div>
+
+
     </Table>
   );
 }
